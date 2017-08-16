@@ -1,7 +1,6 @@
 package gluasocket
 
 import (
-	"fmt"
 	"testing"
 	"time"
 

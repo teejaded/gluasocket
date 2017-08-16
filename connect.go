@@ -1,6 +1,7 @@
 package gluasocket
 
 import (
+	"bufio"
 	"fmt"
 	"net"
 
@@ -13,11 +14,13 @@ func connectFn(l *lua.LState) int {
 
 	conn, err := net.Dial("tcp", fmt.Sprintf("%s:%d", hostname, port))
 	if err != nil {
-		l.RaiseError(fmt.Sprintf("Failed connecting to %s:%d: %v", hostname, port, err))
-		return 0
+		l.Push(lua.LNil)
+		l.Push(lua.LString(err.Error()))
+		return 2
 	}
 
-	client := &Client{Conn: conn}
+	reader := bufio.NewReader(conn)
+	client := &Client{Conn: conn, Reader: reader}
 	ud := l.NewUserData()
 	ud.Value = client
 	l.SetMetatable(ud, l.GetTypeMetatable("client"))
