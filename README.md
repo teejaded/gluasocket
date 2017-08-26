@@ -4,9 +4,15 @@ A native Go implementation of [LuaSocket](https://github.com/diegonehab/luasocke
 
 ## Using
 
-### Get system time
+### Loading Modules
 
 ```go
+import (
+	"github.com/BixData/glua-socket"
+	"github.com/BixData/glua-socket/url"
+	"github.com/yuin/gopher-lua"
+)
+
 import (
 	"github.com/BixData/glua-socket"
 	"github.com/yuin/gopher-lua"
@@ -16,10 +22,16 @@ import (
 luaState := lua.NewState()
 defer luaState.Close()
 
-// Load this LuaSocket module, implemented entirely in Go
+// Load LuaSocket modules, implemented entirely in Go
 luaState.PreloadModule("socket", gluasocket.Loader)
+luaState.PreloadModule("socket.url", gluasocket_url.Loader)
+```
 
-// Run some Lua that makes use of gettime()
+### Get system time
+
+Run some Lua that makes use of `socket.gettime()`:
+
+```go
 luaState.DoString("return require 'socket'.gettime()")
 
 // Read the returned time
