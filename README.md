@@ -11,12 +11,8 @@ import (
 	"github.com/BixData/glua-socket"
 	"github.com/BixData/glua-socket/http"
 	"github.com/BixData/glua-socket/mime"
+	"github.com/BixData/glua-socket/smtp"
 	"github.com/BixData/glua-socket/url"
-	"github.com/yuin/gopher-lua"
-)
-
-import (
-	"github.com/BixData/glua-socket"
 	"github.com/yuin/gopher-lua"
 )
 
@@ -27,6 +23,7 @@ defer luaState.Close()
 // Load LuaSocket modules, implemented entirely in Go
 luaState.PreloadModule("socket", gluasocket.Loader)
 luaState.PreloadModule("socket.http", gluasocket_http.Loader)
+luaState.PreloadModule("socket.smtp", gluasocket_smtp.Loader)
 luaState.PreloadModule("socket.url", gluasocket_url.Loader)
 luaState.PreloadModule("mime", gluasocket_mime.Loader)
 ```
