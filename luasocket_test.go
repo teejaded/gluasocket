@@ -6,11 +6,16 @@ import (
 	"testing"
 
 	"github.com/BixData/gluasocket"
+	"github.com/BixData/gluasocket/http"
 	"github.com/BixData/gluasocket/mime"
 	"github.com/BixData/gluasocket/url"
 	"github.com/stretchr/testify/assert"
 	"github.com/yuin/gopher-lua"
 )
+
+func TestHttp(t *testing.T) {
+	doTest("httptest.lua", t)
+}
 
 func TestMime(t *testing.T) {
 	doTest("mimetest.lua", t)
@@ -31,6 +36,7 @@ func doTest(testScript string, t *testing.T) {
 	// Register the Gluasocket module
 	luaState.PreloadModule("mime", gluasocket_mime.Loader)
 	luaState.PreloadModule("socket", gluasocket.Loader)
+	luaState.PreloadModule("socket.http", gluasocket_http.Loader)
 	luaState.PreloadModule("socket.url", gluasocket_url.Loader)
 
 	// Change working directory to where scripts are, so that nested scripts are found
