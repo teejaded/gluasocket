@@ -5,26 +5,42 @@ import (
 	"os"
 	"testing"
 
-	"github.com/BixData/gluasocket"
 	"github.com/BixData/gluasocket/http"
 	"github.com/BixData/gluasocket/mime"
 	"github.com/BixData/gluasocket/smtp"
+	"github.com/BixData/gluasocket/socket"
 	"github.com/BixData/gluasocket/url"
 	"github.com/stretchr/testify/assert"
 	"github.com/yuin/gopher-lua"
 )
 
-func TestHttp(t *testing.T) {
-	doTest("httptest.lua", t)
-}
+//func TestHttp(t *testing.T) {
+//	doTest("httptest.lua", t)
+//}
 
-func TestMime(t *testing.T) {
-	doTest("mimetest.lua", t)
-}
+//func TestMime(t *testing.T) {
+//	doTest("mimetest.lua", t)
+//}
 
-func TestSmtp(t *testing.T) {
-	doTest("smtptest.lua", t)
-}
+//func TestMimeDot(t *testing.T) {
+//	doTest("stufftest.lua", t)
+//}
+
+//func TestSmtp(t *testing.T) {
+//	doTest("smtptest.lua", t)
+//}
+
+//func TestSmtpMessage(t *testing.T) {
+//	doTest("testmesg.lua", t)
+//}
+
+//func TestSocketGetAddrInfo(t *testing.T) {
+//	doTest("test_getaddrinfo.lua", t)
+//}
+
+//func TestSocketError(t *testing.T) {
+//	doTest("test_socket_error.lua", t)
+//}
 
 func TestUrl(t *testing.T) {
 	doTest("urltest.lua", t)
@@ -40,7 +56,7 @@ func doTest(testScript string, t *testing.T) {
 
 	// Register the Gluasocket module
 	luaState.PreloadModule("mime", gluasocket_mime.Loader)
-	luaState.PreloadModule("socket", gluasocket.Loader)
+	luaState.PreloadModule("socket", gluasocket_socket.Loader)
 	luaState.PreloadModule("socket.http", gluasocket_http.Loader)
 	luaState.PreloadModule("socket.smtp", gluasocket_smtp.Loader)
 	luaState.PreloadModule("socket.url", gluasocket_url.Loader)

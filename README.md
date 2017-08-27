@@ -8,9 +8,9 @@ A native Go implementation of [LuaSocket](https://github.com/diegonehab/luasocke
 
 ```go
 import (
-	"github.com/BixData/glua-socket"
 	"github.com/BixData/glua-socket/http"
 	"github.com/BixData/glua-socket/mime"
+	"github.com/BixData/glua-socket/socket"
 	"github.com/BixData/glua-socket/smtp"
 	"github.com/BixData/glua-socket/url"
 	"github.com/yuin/gopher-lua"
@@ -21,11 +21,11 @@ luaState := lua.NewState()
 defer luaState.Close()
 
 // Load LuaSocket modules, implemented entirely in Go
-luaState.PreloadModule("socket", gluasocket.Loader)
+luaState.PreloadModule("mime", gluasocket_mime.Loader)
+luaState.PreloadModule("socket", gluasocket_socket.Loader)
 luaState.PreloadModule("socket.http", gluasocket_http.Loader)
 luaState.PreloadModule("socket.smtp", gluasocket_smtp.Loader)
 luaState.PreloadModule("socket.url", gluasocket_url.Loader)
-luaState.PreloadModule("mime", gluasocket_mime.Loader)
 ```
 
 ### Get system time

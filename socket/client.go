@@ -1,4 +1,4 @@
-package gluasocket
+package gluasocket_socket
 
 import (
 	"bufio"
