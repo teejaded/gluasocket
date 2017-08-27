@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/BixData/gluasocket/http"
+	"github.com/BixData/gluasocket/ltn12"
 	"github.com/BixData/gluasocket/mime"
 	"github.com/BixData/gluasocket/smtp"
 	"github.com/BixData/gluasocket/socket"
@@ -17,6 +18,10 @@ import (
 //func TestHttp(t *testing.T) {
 //	doTest("httptest.lua", t)
 //}
+
+func TestLtn12(t *testing.T) {
+	doTest("ltn12test.lua", t)
+}
 
 //func TestMime(t *testing.T) {
 //	doTest("mimetest.lua", t)
@@ -55,6 +60,7 @@ func doTest(testScript string, t *testing.T) {
 	defer luaState.Close()
 
 	// Register the Gluasocket module
+	luaState.PreloadModule("ltn12", gluasocket_ltn12.Loader)
 	luaState.PreloadModule("mime", gluasocket_mime.Loader)
 	luaState.PreloadModule("socket", gluasocket_socket.Loader)
 	luaState.PreloadModule("socket.http", gluasocket_http.Loader)
