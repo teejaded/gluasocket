@@ -1,4 +1,4 @@
-package gluasocket_mime
+package gluasocket_mimecore
 
 import (
 	"github.com/yuin/gopher-lua"

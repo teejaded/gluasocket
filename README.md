@@ -42,3 +42,7 @@ lv := luaState.Get(-1)
 retval, ok := lv.(lua.LNumber)
 gettimeValue := float64(retval)
 ```
+
+## Testing
+
+The original LuaSocket Lua-based unit tests are used and wrapped in Go unit test functions. Tests that perform `os.exit()` are modified to perform `error()` instead so that errors are made detectable.
