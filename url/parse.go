@@ -1,12 +1,50 @@
 package gluasocket_url
 
 import (
-	"fmt"
-	"net/url"
-	"strings"
-
 	"github.com/yuin/gopher-lua"
 )
+
+const urlDotLuaSnippet = `function luasocketParse(url, default)
+local base = _G
+local parsed = {}
+for i,v in base.pairs(default or parsed) do parsed[i] = v end
+if not url or url == "" then return nil, "invalid url" end
+url = string.gsub(url, "#(.*)$", function(f)
+    parsed.fragment = f
+    return ""
+end)
+url = string.gsub(url, "^([%w][%w%+%-%.]*)%:",
+    function(s) parsed.scheme = s; return "" end)
+url = string.gsub(url, "^//([^/]*)", function(n)
+    parsed.authority = n
+    return ""
+end)
+url = string.gsub(url, "%?(.*)", function(q)
+    parsed.query = q
+    return ""
+end)
+url = string.gsub(url, "%;(.*)", function(p)
+    parsed.params = p
+    return ""
+end)
+if url ~= "" then parsed.path = url end
+local authority = parsed.authority
+if not authority then return parsed end
+authority = string.gsub(authority,"^([^@]*)@",
+    function(u) parsed.userinfo = u; return "" end)
+authority = string.gsub(authority, ":([^:%]]*)$",
+    function(p) parsed.port = p; return "" end)
+if authority ~= "" then 
+    parsed.host = string.match(authority, "^%[(.+)%]$") or authority 
+end
+local userinfo = parsed.userinfo
+if not userinfo then return parsed end
+userinfo = string.gsub(userinfo, ":([^:]*)$",
+    function(p) parsed.password = p; return "" end)
+parsed.user = userinfo
+return parsed
+end
+`
 
 func parseFn(l *lua.LState) int {
 
@@ -14,129 +52,20 @@ func parseFn(l *lua.LState) int {
 	urlArg := l.Get(1)
 	defaultArg := l.Get(2)
 
-	// Parse
-	var parsedUrl *url.URL
-	var err error
-	if urlArg.Type() == lua.LTString {
-		parsedUrl, err = url.Parse(l.ToString(1))
-	} else {
-		parsedUrl, err = url.Parse("")
-	}
-	if err != nil {
-		l.RaiseError(fmt.Sprintf("socket.url.parse error: %v", err))
+	// Perform the operation in Lua
+	if err := l.DoString(urlDotLuaSnippet); err != nil {
+		l.RaiseError("socket.url.parse() error loading Lua: %v", err)
 		return 0
 	}
-	pathAndParams := strings.Split(parsedUrl.Path, ";")
-	var path, params string
-	if len(pathAndParams) > 0 {
-		path = pathAndParams[0]
-	}
-	if len(pathAndParams) > 1 {
-		params = pathAndParams[1]
-	}
-	var password string
-	passwordIsSet := false
-	if parsedUrl.User != nil {
-		password, passwordIsSet = parsedUrl.User.Password()
-	}
-
-	// Prepare result. Begin with populating requested defaults
-	result := l.NewTable()
-	if defaultArg.Type() == lua.LTTable {
-		defaultsTable := l.ToTable(2)
-		defaultsTable.ForEach(func(key, value lua.LValue) {
-			result.RawSet(key, value)
-		})
-	}
-
-	// scheme
-	if parsedUrl.Scheme != "" {
-		result.RawSetString("scheme", lua.LString(parsedUrl.Scheme))
-	} else {
-		result.RawSetString("scheme", lua.LNil)
-	}
-
-	// authority
-	if parsedUrl.User != nil {
-		if parsedUrl.Host != "" {
-			result.RawSetString("authority", lua.LString(parsedUrl.User.String()+"@"+parsedUrl.Host))
-		} else {
-			result.RawSetString("authority", lua.LNil)
-		}
-	} else {
-		if parsedUrl.Host != "" {
-			result.RawSetString("authority", lua.LString(parsedUrl.Host))
-		} else {
-			result.RawSetString("authority", lua.LNil)
-		}
-	}
-
-	// path
-	if path != "" {
-		result.RawSetString("path", lua.LString(path))
-	} else {
-		result.RawSetString("path", lua.LNil)
-	}
-
-	// params
-	if params != "" || (urlArg.Type() != lua.LTNil && strings.Contains(urlArg.String(), ";")) {
-		result.RawSetString("params", lua.LString(params))
-	} else {
-		result.RawSetString("params", lua.LNil)
-	}
-
-	// query
-	if parsedUrl.RawQuery != "" || (urlArg.Type() != lua.LTNil && strings.Contains(urlArg.String(), "?")) {
-		result.RawSetString("query", lua.LString(parsedUrl.RawQuery))
-	} else {
-		result.RawSetString("query", lua.LNil)
-	}
-
-	// fragment
-	if parsedUrl.Fragment != "" || (urlArg.Type() != lua.LTNil && strings.HasSuffix(urlArg.String(), "#")) {
-		result.RawSetString("fragment", lua.LString(parsedUrl.Fragment))
-	} else {
-		result.RawSetString("fragment", lua.LNil)
-	}
-
-	// userinfo
-	if parsedUrl.User != nil {
-		result.RawSetString("userinfo", lua.LString(parsedUrl.User.String()))
-	} else {
-		result.RawSetString("userinfo", lua.LNil)
-	}
-
-	// host
-	hostname := parsedUrl.Hostname()
-	if hostname != "" {
-		result.RawSetString("host", lua.LString(parsedUrl.Hostname()))
-	} else {
-		result.RawSetString("host", lua.LNil)
-	}
-
-	// port
-	port := parsedUrl.Port()
-	if port != "" {
-		result.RawSetString("port", lua.LString(port))
-	} else {
-		result.RawSetString("port", lua.LNil)
-	}
-
-	// user
-	if parsedUrl.User != nil {
-		result.RawSetString("user", lua.LString(parsedUrl.User.Username()))
-	} else {
-		result.RawSetString("user", lua.LNil)
-	}
-
-	// password
-	if passwordIsSet {
-		result.RawSetString("password", lua.LString(password))
-	} else {
-		result.RawSetString("password", lua.LNil)
+	if err := l.CallByParam(lua.P{
+		Fn:      l.GetGlobal("luasocketParse"),
+		NRet:    1,
+		Protect: true,
+	}, urlArg, defaultArg); err != nil {
+		l.RaiseError("socket.url.parse() error: %v", err)
+		return 0
 	}
 
 	// Return result
-	l.Push(result)
 	return 1
 }
