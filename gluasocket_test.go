@@ -28,9 +28,9 @@ func TestLtn12(t *testing.T) {
 //	doTest("mimetest.lua", t)
 //}
 
-//func TestMimeDot(t *testing.T) {
-//	doTest("stufftest.lua", t)
-//}
+func TestMimeDot(t *testing.T) {
+	doTest("stufftest.lua", t)
+}
 
 //func TestSmtp(t *testing.T) {
 //	doTest("smtptest.lua", t)
