@@ -5,10 +5,9 @@ dofile("testsupport.lua")
 local check_build_url = function(parsed)
     local built = socket.url.build(parsed)
     if built ~= parsed.url then
-        print("built is different from expected")
         print(built)
         print(expected)
-        os.exit()
+        error("built is different from expected")
     end
 end
 
@@ -16,8 +15,7 @@ local check_protect = function(parsed, path, unsafe)
     local built = socket.url.build_path(parsed, unsafe)
     if built ~= path then
         print(built, path)
-        print("path composition failed.")
-        os.exit()
+        error("path composition failed.")
     end
 end
 
@@ -27,8 +25,7 @@ local check_invert = function(url)
     local rebuilt = socket.url.build(parsed)
     if rebuilt ~= url then
         print(url, rebuilt)
-        print("original and rebuilt are different")
-        os.exit()
+        error("original and rebuilt are different")
     end
 end
 
@@ -36,25 +33,21 @@ local check_parse_path = function(path, expect)
     local parsed = socket.url.parse_path(path)
     for i = 1, math.max(#parsed, #expect) do
         if parsed[i] ~= expect[i] then
-            print(path)
-            os.exit()
+            error(path)
         end
     end
     if expect.is_directory ~= parsed.is_directory then
         print(path)
-        print("is_directory mismatch")
-        os.exit()
+        error("is_directory mismatch")
     end
     if expect.is_absolute ~= parsed.is_absolute then
         print(path)
-        print("is_absolute mismatch")
-        os.exit()
+        error("is_absolute mismatch")
     end
     local built = socket.url.build_path(expect)
     if built ~= path then
         print(built, path)
-        print("path composition failed.")
-        os.exit()
+        error("path composition failed.")
     end
 end
 
@@ -63,7 +56,7 @@ local check_absolute_url = function(base, relative, absolute)
     if res ~= absolute then 
         io.write("absolute: In test for '", relative, "' expected '", 
             absolute, "' but got '", res, "'\n")
-        os.exit()
+        error("failed")
     end
 end
 
@@ -76,7 +69,7 @@ local check_parse_url = function(gaba)
             io.write("parse: In test for '", url, "' expected ", i, " = '", 
                    v, "' but got '", tostring(parsed[i]), "'\n")
             for i,v in pairs(parsed) do print(i,v) end
-            os.exit()
+            error("failed")
         end
     end
     for i, v in pairs(parsed) do
@@ -84,7 +77,7 @@ local check_parse_url = function(gaba)
             io.write("parse: In test for '", url, "' expected ", i, " = '", 
                    tostring(gaba[i]), "' but got '", v, "'\n")
             for i,v in pairs(parsed) do print(i,v) end
-            os.exit()
+            error("failed")
         end
     end
 end
