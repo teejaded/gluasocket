@@ -23,5 +23,7 @@ func Loader(l *lua.LState) int {
 	mod := l.SetFuncs(l.NewTable(), exports)
 	l.Push(mod)
 
+	qpsetup()
+
 	return 1
 }
