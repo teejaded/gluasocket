@@ -1,10 +1,11 @@
-package gluasocket_socket_test
+package gluasocket_socketcore_test
 
 import (
 	"testing"
 	"time"
 
 	"github.com/BixData/gluasocket/socket"
+	"github.com/BixData/gluasocket/socketcore"
 	"github.com/stretchr/testify/assert"
 	"github.com/yuin/gopher-lua"
 )
@@ -15,6 +16,7 @@ func TestGettime(t *testing.T) {
 	luaState := lua.NewState()
 	defer luaState.Close()
 
+	luaState.PreloadModule("socket.core", gluasocket_socketcore.Loader)
 	luaState.PreloadModule("socket", gluasocket_socket.Loader)
 
 	now := time.Now()
