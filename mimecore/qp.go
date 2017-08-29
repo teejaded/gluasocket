@@ -155,6 +155,7 @@ func qpencode(c rune, input *bytes.Buffer, marker string, buffer *bytes.Buffer) 
 			if inputBytes[1] == '\r' && inputBytes[2] == '\n' {
 				qpquote(inputBytes[0], buffer)
 				buffer.WriteString(marker)
+				input.Next(2)
 				return
 			} else {
 				buffer.WriteByte(inputBytes[0])
