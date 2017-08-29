@@ -5,13 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/BixData/gluasocket/http"
-	"github.com/BixData/gluasocket/ltn12"
-	"github.com/BixData/gluasocket/mime"
-	"github.com/BixData/gluasocket/mimecore"
-	"github.com/BixData/gluasocket/smtp"
-	"github.com/BixData/gluasocket/socket"
-	"github.com/BixData/gluasocket/url"
+	"github.com/BixData/gluasocket"
 	"github.com/stretchr/testify/assert"
 	"github.com/yuin/gopher-lua"
 )
@@ -61,13 +55,7 @@ func doTest(testScript string, t *testing.T) {
 	defer luaState.Close()
 
 	// Register the Gluasocket module
-	luaState.PreloadModule("ltn12", gluasocket_ltn12.Loader)
-	luaState.PreloadModule("mime.core", gluasocket_mimecore.Loader)
-	luaState.PreloadModule("mime", gluasocket_mime.Loader)
-	luaState.PreloadModule("socket", gluasocket_socket.Loader)
-	luaState.PreloadModule("socket.http", gluasocket_http.Loader)
-	luaState.PreloadModule("socket.smtp", gluasocket_smtp.Loader)
-	luaState.PreloadModule("socket.url", gluasocket_url.Loader)
+	gluasocket.Preload(luaState)
 
 	// Change working directory to where scripts are, so that nested scripts are found
 	os.Chdir("testdata/luasocket-test")
