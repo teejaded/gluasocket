@@ -1,6 +1,7 @@
 package gluasocket
 
 import (
+	"github.com/BixData/gluasocket/ftp"
 	"github.com/BixData/gluasocket/headers"
 	"github.com/BixData/gluasocket/http"
 	"github.com/BixData/gluasocket/ltn12"
@@ -20,6 +21,7 @@ func Preload(L *lua.LState) {
 	L.PreloadModule("mime", gluasocket_mime.Loader)
 	L.PreloadModule("socket", gluasocket_socket.Loader)
 	L.PreloadModule("socket.core", gluasocket_socketcore.Loader)
+	L.PreloadModule("socket.ftp", gluasocket_ftp.Loader)
 	L.PreloadModule("socket.headers", gluasocket_headers.Loader)
 	L.PreloadModule("socket.http", gluasocket_http.Loader)
 	L.PreloadModule("socket.smtp", gluasocket_smtp.Loader)

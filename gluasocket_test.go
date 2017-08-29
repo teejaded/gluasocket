@@ -10,6 +10,10 @@ import (
 	"github.com/yuin/gopher-lua"
 )
 
+//func TestFtp(t *testing.T) {
+//	doTest("ftptest.lua", t)
+//}
+
 //func TestHttp(t *testing.T) {
 //	doTest("httptest.lua", t)
 //}
