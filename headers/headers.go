@@ -8,7 +8,7 @@ import (
 
 func Loader(l *lua.LState) int {
 	if err := l.DoString(headersDotLua); err != nil {
-		l.RaiseError("headers error loading Lua: %v", err)
+		l.RaiseError("Error loading headers.lua: %v", err)
 		return 0
 	}
 	return 1

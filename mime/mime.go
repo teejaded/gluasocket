@@ -8,7 +8,7 @@ import (
 
 func Loader(l *lua.LState) int {
 	if err := l.DoString(mimeDotLua); err != nil {
-		l.RaiseError("mime error loading Lua: %v", err)
+		l.RaiseError("Error loading mime.lua: %v", err)
 		return 0
 	}
 	return 1

@@ -8,7 +8,7 @@ import (
 
 func Loader(l *lua.LState) int {
 	if err := l.DoString(smtpDotLua); err != nil {
-		l.RaiseError("smtp error loading Lua: %v", err)
+		l.RaiseError("Error loading smtp.lua: %v", err)
 		return 0
 	}
 	return 1

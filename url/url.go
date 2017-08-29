@@ -8,7 +8,7 @@ import (
 
 func Loader(l *lua.LState) int {
 	if err := l.DoString(urlDotLua); err != nil {
-		l.RaiseError("socket.url error loading Lua: %v", err)
+		l.RaiseError("Error loading url.lua: %v", err)
 		return 0
 	}
 	return 1

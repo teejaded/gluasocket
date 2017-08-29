@@ -8,7 +8,7 @@ import (
 
 func Loader(l *lua.LState) int {
 	if err := l.DoString(httpDotLua); err != nil {
-		l.RaiseError("http error loading Lua: %v", err)
+		l.RaiseError("Error loading http.lua: %v", err)
 		return 0
 	}
 	return 1
