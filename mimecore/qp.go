@@ -47,7 +47,7 @@ func qpFn(l *lua.LState) int {
 	// process first part of input
 	var buffer bytes.Buffer
 	for _, c := range input {
-		qpencode(c, &atom /*asize, */, marker, &buffer)
+		qpencode(c, &atom, marker, &buffer)
 	}
 
 	// if second part is nil, we are done
@@ -64,11 +64,9 @@ func qpFn(l *lua.LState) int {
 
 	// otherwise process rest of input
 	input = l.ToString(2)
-	// TODO
-	// last = input + isize;
-	// while (input < last)
-	//    asize = qpencode(*input++, atom, asize, marker, &buffer);
-	//}
+	for _, c := range input {
+		qpencode(c, &atom, marker, &buffer)
+	}
 
 	l.Push(lua.LString(buffer.String()))
 	l.Push(lua.LString(atom.String()))
@@ -92,7 +90,7 @@ func qpsetup() {
 
 	qpclass['\t'] = QP_IF_LAST
 	qpclass[' '] = QP_IF_LAST
-	qpclass['\r'] = QP_IF_LAST
+	qpclass['\r'] = QP_CR
 
 	for i := 0; i < 256; i++ {
 		qpunbase[i] = 255
@@ -125,7 +123,7 @@ func qpsetup() {
 * Accumulate characters until we are sure about how to deal with them.
 * Once we are sure, output to the buffer, in the correct form.
 \*-------------------------------------------------------------------------*/
-func qpencode(c rune, input *bytes.Buffer /*size lua.LNumber, */, marker string, buffer *bytes.Buffer) int {
+func qpencode(c rune, input *bytes.Buffer, marker string, buffer *bytes.Buffer) {
 	input.WriteRune(c)
 
 	// deal with all characters we can have
@@ -138,11 +136,12 @@ func qpencode(c rune, input *bytes.Buffer /*size lua.LNumber, */, marker string,
 		// might be the CR of a CRLF sequence
 		case QP_CR:
 			if len(inputBytes) < 2 {
-				return len(inputBytes)
+				return
 			}
 			if inputBytes[1] == '\n' {
 				buffer.WriteString(marker)
-				return 0
+				input.Next(2)
+				return
 			} else {
 				qpquote(inputBytes[0], buffer)
 			}
@@ -150,13 +149,13 @@ func qpencode(c rune, input *bytes.Buffer /*size lua.LNumber, */, marker string,
 			// might be a space and that has to be quoted if last in line
 		case QP_IF_LAST:
 			if len(inputBytes) < 3 {
-				return len(inputBytes)
+				return
 			}
 			// if it is the last, quote it and we are done
 			if inputBytes[1] == '\r' && inputBytes[2] == '\n' {
 				qpquote(inputBytes[0], buffer)
 				buffer.WriteString(marker)
-				return 0
+				return
 			} else {
 				buffer.WriteByte(inputBytes[0])
 			}
@@ -172,7 +171,6 @@ func qpencode(c rune, input *bytes.Buffer /*size lua.LNumber, */, marker string,
 		}
 		input.Next(1)
 	}
-	return 0
 }
 
 /*-------------------------------------------------------------------------*\
