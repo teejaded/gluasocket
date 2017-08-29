@@ -46,8 +46,8 @@ func registerClientType(l *lua.LState, mod *lua.LTable) {
 
 // ----------------------------------------------------------------------------
 
-func registerDNSType(l *lua.LState, mod *lua.LTable) {
-	mt := l.NewTypeMetatable("dns")
-	l.SetField(mod, "dns", mt)
-	l.SetField(mt, "__index", l.SetFuncs(l.NewTable(), clientMethods))
+func registerDNSType(L *lua.LState, mod *lua.LTable) {
+	table := L.NewTable()
+	L.SetFuncs(table, dnsMethods)
+	L.SetField(mod, "dns", table)
 }
