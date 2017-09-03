@@ -17,7 +17,6 @@ var exports = map[string]lua.LGFunction{
 	"sleep":   sleepFn,
 	"source":  sourceFn,
 	"tcp":     tcpFn,
-	"try":     tryFn,
 	"udp":     udpFn,
 }
 
