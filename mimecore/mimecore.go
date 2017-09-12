@@ -24,6 +24,7 @@ func Loader(l *lua.LState) int {
 	l.Push(mod)
 
 	qpsetup()
+	b64setup()
 
 	return 1
 }

@@ -7,8 +7,22 @@ import (
 )
 
 var (
-	b64base = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+	b64base   = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+	b64unbase [256]byte
 )
+
+/*-------------------------------------------------------------------------*\
+* Fill base64 decode map.
+\*-------------------------------------------------------------------------*/
+func b64setup() {
+	for i := 0; i <= 255; i++ {
+		b64unbase[i] = 255
+	}
+	for i := 0; i < 64; i++ {
+		b64unbase[b64base[i]] = byte(i)
+	}
+	b64unbase['='] = 0
+}
 
 func b64Fn(L *lua.LState) int {
 	var atom bytes.Buffer
