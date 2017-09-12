@@ -9,8 +9,6 @@ import (
 var exports = map[string]lua.LGFunction{
 	"connect": connectFn,
 	"gettime": gettimeFn,
-	"newtry":  newtryFn,
-	"protect": protectFn,
 	"select":  selectFn,
 	"sink":    sinkFn,
 	"skip":    skipFn,

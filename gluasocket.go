@@ -10,6 +10,7 @@ import (
 	"github.com/BixData/gluasocket/smtp"
 	"github.com/BixData/gluasocket/socket"
 	"github.com/BixData/gluasocket/socketcore"
+	"github.com/BixData/gluasocket/socketexcept"
 	"github.com/BixData/gluasocket/tp"
 	"github.com/BixData/gluasocket/url"
 	"github.com/yuin/gopher-lua"
@@ -21,6 +22,7 @@ func Preload(L *lua.LState) {
 	L.PreloadModule("mime", gluasocket_mime.Loader)
 	L.PreloadModule("socket", gluasocket_socket.Loader)
 	L.PreloadModule("socket.core", gluasocket_socketcore.Loader)
+	L.PreloadModule("socket.except", gluasocket_socketexcept.Loader)
 	L.PreloadModule("socket.ftp", gluasocket_ftp.Loader)
 	L.PreloadModule("socket.headers", gluasocket_headers.Loader)
 	L.PreloadModule("socket.http", gluasocket_http.Loader)
