@@ -24,6 +24,15 @@ func b64setup() {
 	b64unbase['='] = 0
 }
 
+/*-------------------------------------------------------------------------*\
+* Incrementally applies the Base64 transfer content encoding to a string
+* A, B = b64(C, D)
+* A is the encoded version of the largest prefix of C .. D that is
+* divisible by 3. B has the remaining bytes of C .. D, *without* encoding.
+* The easiest thing would be to concatenate the two strings and
+* encode the result, but we can't afford that or Lua would dupplicate
+* every chunk we received.
+\*-------------------------------------------------------------------------*/
 func b64Fn(L *lua.LState) int {
 	var atom bytes.Buffer
 
@@ -38,8 +47,8 @@ func b64Fn(L *lua.LState) int {
 
 	/* process first part of the input */
 	var buffer bytes.Buffer
-	for _, c := range input {
-		b64encode(c, &atom, &buffer)
+	for i := 0; i < len(input); i++ {
+		b64encode(input[i], &atom, &buffer)
 	}
 
 	/* if second part is nil, we are done */
@@ -56,8 +65,8 @@ func b64Fn(L *lua.LState) int {
 
 	/* otherwise process the second part */
 	input = L.ToString(2)
-	for _, c := range input {
-		b64encode(c, &atom, &buffer)
+	for i := 0; i < len(input); i++ {
+		b64encode(input[i], &atom, &buffer)
 	}
 	L.Push(lua.LString(buffer.String()))
 	L.Push(lua.LString(atom.String()))
@@ -69,8 +78,8 @@ func b64Fn(L *lua.LState) int {
 * Translate the 3 bytes into Base64 form and append to buffer.
 * Returns new number of bytes in buffer.
 \*-------------------------------------------------------------------------*/
-func b64encode(c rune, input *bytes.Buffer, buffer *bytes.Buffer) {
-	input.WriteRune(c)
+func b64encode(c byte, input *bytes.Buffer, buffer *bytes.Buffer) {
+	input.WriteByte(c)
 	if input.Len() == 3 {
 		var code [4]byte
 		var value uint32
