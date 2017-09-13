@@ -22,29 +22,6 @@ func TestQpQuote255(t *testing.T) {
 	assert.Equal("=FF", buffer.String())
 }
 
-func TestQpEncodeMoepsi(t *testing.T) {
-	assert := assert.New(t)
-	qpsetup()
-	marker := "\r\n"
-	var input, buffer bytes.Buffer
-
-	qpencode('M', &input, marker, &buffer)
-	assert.Equal(0, input.Len())
-	assert.Equal("M", buffer.String())
-
-	qpencode('ö', &input, marker, &buffer)
-	assert.Equal("M=C3=B6", buffer.String())
-
-	qpencode('p', &input, marker, &buffer)
-	assert.Equal("M=C3=B6p", buffer.String())
-
-	qpencode('s', &input, marker, &buffer)
-	assert.Equal("M=C3=B6ps", buffer.String())
-
-	qpencode('i', &input, marker, &buffer)
-	assert.Equal("M=C3=B6psi", buffer.String())
-}
-
 //-----------------------------------------------------------------------------
 // mime=require 'mime'
 // A,B = mime.qp('Möpsi')

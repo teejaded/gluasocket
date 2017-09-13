@@ -46,8 +46,8 @@ func qpFn(l *lua.LState) int {
 
 	// process first part of input
 	var buffer bytes.Buffer
-	for _, c := range input {
-		qpencode(c, &atom, marker, &buffer)
+	for i := 0; i < len(input); i++ {
+		qpencode(input[i], &atom, marker, &buffer)
 	}
 
 	// if second part is nil, we are done
@@ -64,8 +64,8 @@ func qpFn(l *lua.LState) int {
 
 	// otherwise process rest of input
 	input = l.ToString(2)
-	for _, c := range input {
-		qpencode(c, &atom, marker, &buffer)
+	for i := 0; i < len(input); i++ {
+		qpencode(input[i], &atom, marker, &buffer)
 	}
 
 	l.Push(lua.LString(buffer.String()))
@@ -123,8 +123,8 @@ func qpsetup() {
 * Accumulate characters until we are sure about how to deal with them.
 * Once we are sure, output to the buffer, in the correct form.
 \*-------------------------------------------------------------------------*/
-func qpencode(c rune, input *bytes.Buffer, marker string, buffer *bytes.Buffer) {
-	input.WriteRune(c)
+func qpencode(c byte, input *bytes.Buffer, marker string, buffer *bytes.Buffer) {
+	input.WriteByte(c)
 
 	// deal with all characters we can have
 	for input.Len() > 0 {
