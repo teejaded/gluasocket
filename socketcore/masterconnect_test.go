@@ -29,7 +29,7 @@ func TestMasterConnect(t *testing.T) {
 		}
 	}()
 
-	script := fmt.Sprintf(`require 'socket'.tcp():connect('%s', %d)`, "127.0.0.1", port)
+	script := fmt.Sprintf(`require 'socket.core'.tcp():connect('%s', %d)`, "127.0.0.1", port)
 	assert.NoError(L.DoString(script))
 
 	time.Sleep(20 * time.Millisecond)

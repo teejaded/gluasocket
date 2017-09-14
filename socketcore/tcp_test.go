@@ -14,7 +14,7 @@ func TestTcp(t *testing.T) {
 	defer L.Close()
 	gluasocket.Preload(L)
 
-	assert.NoError(L.DoString(`return require 'socket'.tcp()`))
+	assert.NoError(L.DoString(`return require 'socket.core'.tcp()`))
 	master := L.Get(-1)
 	assert.Equal(lua.LTUserData, master.Type())
 }

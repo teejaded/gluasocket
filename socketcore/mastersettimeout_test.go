@@ -14,7 +14,7 @@ func TestMasterSetTimeout(t *testing.T) {
 	defer L.Close()
 	gluasocket.Preload(L)
 
-	assert.NoError(L.DoString(`return require 'socket'.tcp():settimeout(.25)`))
+	assert.NoError(L.DoString(`return require 'socket.core'.tcp():settimeout(.25)`))
 	retval := L.Get(-1)
 	assert.Equal(lua.LTNil, retval.Type())
 }
