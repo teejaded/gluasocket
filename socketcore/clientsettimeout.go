@@ -6,7 +6,7 @@ import (
 	"github.com/yuin/gopher-lua"
 )
 
-func clientSetTimeoutFn(L *lua.LState) int {
+func clientSetTimeoutMethod(L *lua.LState) int {
 	client := checkClient(L)
 	timeout := L.CheckNumber(2)
 	client.Timeout = time.Duration(timeout * 1.0e9)

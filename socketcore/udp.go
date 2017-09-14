@@ -4,7 +4,7 @@ import (
 	"github.com/yuin/gopher-lua"
 )
 
-func udpFn(l *lua.LState) int {
-	l.RaiseError("socket.udp() not implemented yet")
+func udpFn(L *lua.LState) int {
+	L.RaiseError("socket.udp() not implemented yet")
 	return 0
 }

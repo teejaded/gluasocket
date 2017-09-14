@@ -19,9 +19,10 @@ type Client struct {
 }
 
 var clientMethods = map[string]lua.LGFunction{
-	"close":      clientCloseFn,
-	"receive":    clientReceiveFn,
-	"settimeout": clientSetTimeoutFn,
+	"close":      clientCloseMethod,
+	"receive":    clientReceiveMethod,
+	"settimeout": clientSetTimeoutMethod,
+	"send":       clientSendMethod,
 }
 
 // ----------------------------------------------------------------------------

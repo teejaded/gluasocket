@@ -8,7 +8,7 @@ import (
 	"github.com/yuin/gopher-lua"
 )
 
-func clientReceiveFn(L *lua.LState) int {
+func clientReceiveMethod(L *lua.LState) int {
 	client := checkClient(L)
 	luaPattern := L.Get(2)
 	//luaPrefix := "" // l.CheckString(3)
