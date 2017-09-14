@@ -1,4 +1,4 @@
-package gluasocket_smtp
+package gluasocket_socketsmtp
 
 import (
 	"github.com/yuin/gopher-lua"

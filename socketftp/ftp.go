@@ -1,4 +1,4 @@
-package gluasocket_ftp
+package gluasocket_socketftp
 
 import (
 	"github.com/yuin/gopher-lua"

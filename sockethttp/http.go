@@ -1,4 +1,4 @@
-package gluasocket_http
+package gluasocket_sockethttp
 
 import (
 	"github.com/yuin/gopher-lua"
