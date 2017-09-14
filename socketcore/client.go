@@ -19,10 +19,16 @@ type Client struct {
 }
 
 var clientMethods = map[string]lua.LGFunction{
-	"close":      clientCloseMethod,
-	"receive":    clientReceiveMethod,
-	"settimeout": clientSetTimeoutMethod,
-	"send":       clientSendMethod,
+	"close":       clientCloseMethod,
+	"getpeername": clientGetPeerNameMethod,
+	"getsockname": clientGetSockNameMethod,
+	"getstats":    clientGetStatsMethod,
+	"receive":     clientReceiveMethod,
+	"settimeout":  clientSetTimeoutMethod,
+	"send":        clientSendMethod,
+	"setoption":   clientSetOptionMethod,
+	"setstats":    clientSetStatsMethod,
+	"shutdown":    clientShutdownMethod,
 }
 
 // ----------------------------------------------------------------------------
