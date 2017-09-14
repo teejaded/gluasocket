@@ -20,31 +20,39 @@ var exports = map[string]lua.LGFunction{
 
 // ----------------------------------------------------------------------------
 
-func Loader(l *lua.LState) int {
-	mod := l.SetFuncs(l.NewTable(), exports)
-	l.Push(mod)
+func Loader(L *lua.LState) int {
+	mod := L.SetFuncs(L.NewTable(), exports)
+	L.Push(mod)
 
-	l.SetField(mod, "_DEBUG", lua.LBool(false))
-	l.SetField(mod, "_VERSION", lua.LString("0.0.0")) // TODO
+	L.SetField(mod, "_DEBUG", lua.LBool(false))
+	L.SetField(mod, "_VERSION", lua.LString("0.0.0")) // TODO
 
-	registerClientType(l, mod)
-	registerDNSType(l, mod)
+	registerClientType(L)
+	registerMasterType(L)
+
+	registerDNSTable(L, mod)
 
 	return 1
 }
 
 // ----------------------------------------------------------------------------
 
-func registerClientType(l *lua.LState, mod *lua.LTable) {
-	mt := l.NewTypeMetatable("client")
-	l.SetField(mod, "client", mt)
-	l.SetField(mt, "__index", l.SetFuncs(l.NewTable(), clientMethods))
+func registerClientType(L *lua.LState) {
+	mt := L.NewTypeMetatable(CLIENT_TYPENAME)
+	L.SetField(mt, "__index", L.SetFuncs(L.NewTable(), clientMethods))
 }
 
 // ----------------------------------------------------------------------------
 
-func registerDNSType(L *lua.LState, mod *lua.LTable) {
+func registerDNSTable(L *lua.LState, mod *lua.LTable) {
 	table := L.NewTable()
 	L.SetFuncs(table, dnsMethods)
 	L.SetField(mod, "dns", table)
+}
+
+// ----------------------------------------------------------------------------
+
+func registerMasterType(L *lua.LState) {
+	mt := L.NewTypeMetatable(MASTER_TYPENAME)
+	L.SetField(mt, "__index", L.SetFuncs(L.NewTable(), masterMethods))
 }

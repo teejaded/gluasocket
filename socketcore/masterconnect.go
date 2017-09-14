@@ -8,9 +8,10 @@ import (
 	"github.com/yuin/gopher-lua"
 )
 
-func connectFn(L *lua.LState) int {
-	hostname := L.ToString(1)
-	port := L.ToInt(2)
+func masterConnectMethod(L *lua.LState) int {
+	master := checkMaster(L)
+	hostname := L.ToString(2)
+	port := L.ToInt(3)
 
 	conn, err := net.Dial("tcp", fmt.Sprintf("%s:%d", hostname, port))
 	if err != nil {
@@ -20,7 +21,7 @@ func connectFn(L *lua.LState) int {
 	}
 
 	reader := bufio.NewReader(conn)
-	client := &Client{Conn: conn, Reader: reader}
+	client := &Client{Conn: conn, Reader: reader, Timeout: master.Timeout}
 	ud := L.NewUserData()
 	ud.Value = client
 	L.SetMetatable(ud, L.GetTypeMetatable(CLIENT_TYPENAME))

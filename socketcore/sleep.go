@@ -6,15 +6,15 @@ import (
 	"github.com/yuin/gopher-lua"
 )
 
-func sleepFn(l *lua.LState) int {
+func sleepFn(L *lua.LState) int {
 
 	// Read arguments
-	timeout := l.Get(1)
+	timeout := L.Get(1)
 
 	// Handle
 	timeoutVal, ok := timeout.(lua.LNumber)
 	if !ok {
-		l.RaiseError("Malformed timeout in call to socket.sleep(time)")
+		L.RaiseError("Malformed timeout in call to socket.sleep(time)")
 		return 0
 	}
 	timeoutDuration := time.Duration(timeoutVal * 1.0e9)

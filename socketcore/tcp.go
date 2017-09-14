@@ -4,7 +4,11 @@ import (
 	"github.com/yuin/gopher-lua"
 )
 
-func tcpFn(l *lua.LState) int {
-	l.RaiseError("socket.tcp() not implemented yet")
-	return 0
+func tcpFn(L *lua.LState) int {
+	master := &Master{}
+	ud := L.NewUserData()
+	ud.Value = master
+	L.SetMetatable(ud, L.GetTypeMetatable(MASTER_TYPENAME))
+	L.Push(ud)
+	return 1
 }
