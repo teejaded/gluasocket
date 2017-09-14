@@ -10,10 +10,8 @@ var exports = map[string]lua.LGFunction{
 	"connect": connectFn,
 	"gettime": gettimeFn,
 	"select":  selectFn,
-	"sink":    sinkFn,
 	"skip":    skipFn,
 	"sleep":   sleepFn,
-	"source":  sourceFn,
 	"tcp":     tcpFn,
 	"udp":     udpFn,
 }
