@@ -5,6 +5,9 @@ import (
 )
 
 func skipFn(L *lua.LState) int {
-	L.RaiseError("socket.skip(d, [... ret<n>]) not implemented yet")
-	return 0
+	d := L.ToInt(1)
+	for i := 0; i < d; i++ {
+		L.Remove(2)
+	}
+	return L.GetTop()
 }
