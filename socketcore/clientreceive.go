@@ -11,11 +11,11 @@ import (
 
 func clientReceiveMethod(L *lua.LState) int {
 	client := checkClient(L)
-	luaPattern := L.Get(2)
-	//luaPrefix := "" // TODO l.CheckString(3)
+	pattern := L.Get(2)
+	//prefix := "" // TODO L.CheckString(3)
 
 	// Read a number of bytes from the socket
-	if luaPattern.Type() == lua.LTNumber {
+	if pattern.Type() == lua.LTNumber {
 		if client.Timeout <= 0 {
 			client.Conn.SetDeadline(time.Time{})
 		} else {
@@ -44,7 +44,8 @@ func clientReceiveMethod(L *lua.LState) int {
 	}
 
 	// Read a line of text from the socket. Line separators are not returned.
-	if luaPattern.Type() == lua.LTString && luaPattern.String() == "*l" {
+	// This is the default pattern so nil is the same as "*l".
+	if pattern.Type() == lua.LTNil || (pattern.Type() == lua.LTString && pattern.String() == "*l") {
 		var buf bytes.Buffer
 		for {
 			if client.Timeout <= 0 {
@@ -72,7 +73,7 @@ func clientReceiveMethod(L *lua.LState) int {
 	}
 
 	// Read until the connection is closed
-	if luaPattern.Type() == lua.LTString && luaPattern.String() == "*a" {
+	if pattern.Type() == lua.LTString && pattern.String() == "*a" {
 		if client.Timeout <= 0 {
 			client.Conn.SetDeadline(time.Time{})
 		} else {

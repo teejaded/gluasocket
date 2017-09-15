@@ -35,7 +35,7 @@ func TestClientReceiveLines(t *testing.T) {
 		}
 	}()
 
-	script := fmt.Sprintf(`c=require 'socket.core'.connect('%s', %d); x=c:receive('*l'); y=c:receive('*l'); c:close(); return x,y`, "127.0.0.1", port)
+	script := fmt.Sprintf(`c=require 'socket.core'.connect('%s', %d); x=c:receive('*l'); y=c:receive(); c:close(); return x,y`, "127.0.0.1", port)
 	assert.NoError(L.DoString(script))
 
 	time.Sleep(20 * time.Millisecond)
