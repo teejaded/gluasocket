@@ -20,6 +20,8 @@ type Client struct {
 
 var clientMethods = map[string]lua.LGFunction{
 	"close":       clientCloseMethod,
+	"dirty":       clientDirtyMethod,
+	"getfd":       clientGetFdMethod,
 	"getpeername": clientGetPeerNameMethod,
 	"getsockname": clientGetSockNameMethod,
 	"getstats":    clientGetStatsMethod,
