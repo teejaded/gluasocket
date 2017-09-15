@@ -22,7 +22,11 @@ func clientReceiveMethod(L *lua.LState) int {
 		}
 		// Read a line of text from the socket. Line separators are not returned.
 		if pattern == "*l" {
-			client.Conn.SetReadDeadline(time.Now().Add(client.Timeout))
+			if client.Timeout == 0 {
+				client.Conn.SetDeadline(time.Time{})
+			} else {
+				client.Conn.SetDeadline(time.Now().Add(client.Timeout))
+			}
 			var buf bytes.Buffer
 			for {
 				line, isPrefix, err := client.Reader.ReadLine()
