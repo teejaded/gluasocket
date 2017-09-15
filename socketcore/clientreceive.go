@@ -22,7 +22,8 @@ func clientReceiveMethod(L *lua.LState) int {
 			client.Conn.SetDeadline(time.Now().Add(client.Timeout))
 		}
 		var buf bytes.Buffer
-		for i := 0; i < L.ToInt(2); i++ {
+		bytesToRead := L.ToInt(2)
+		for i := 0; i < bytesToRead; i++ {
 			byte, err := client.Reader.ReadByte()
 			if err == io.EOF {
 				break
