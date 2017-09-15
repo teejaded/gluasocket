@@ -16,7 +16,7 @@ func clientReceiveMethod(L *lua.LState) int {
 
 	// Read a number of bytes from the socket
 	if luaPattern.Type() == lua.LTNumber {
-		if client.Timeout == 0 {
+		if client.Timeout <= 0 {
 			client.Conn.SetDeadline(time.Time{})
 		} else {
 			client.Conn.SetDeadline(time.Now().Add(client.Timeout))
@@ -47,7 +47,7 @@ func clientReceiveMethod(L *lua.LState) int {
 	if luaPattern.Type() == lua.LTString && luaPattern.String() == "*l" {
 		var buf bytes.Buffer
 		for {
-			if client.Timeout == 0 {
+			if client.Timeout <= 0 {
 				client.Conn.SetDeadline(time.Time{})
 			} else {
 				client.Conn.SetDeadline(time.Now().Add(client.Timeout))
@@ -73,7 +73,7 @@ func clientReceiveMethod(L *lua.LState) int {
 
 	// Read until the connection is closed
 	if luaPattern.Type() == lua.LTString && luaPattern.String() == "*a" {
-		if client.Timeout == 0 {
+		if client.Timeout <= 0 {
 			client.Conn.SetDeadline(time.Time{})
 		} else {
 			client.Conn.SetDeadline(time.Now().Add(client.Timeout))
