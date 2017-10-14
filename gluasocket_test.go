@@ -22,17 +22,17 @@ func TestExcept(t *testing.T) {
 //	doTest("httptest.lua", t)
 //}
 
-func TestLtn12(t *testing.T) {
-	doTest("ltn12test.lua", t)
-}
+//func TestLtn12(t *testing.T) {
+//	doTest("ltn12test.lua", t)
+//}
 
 //func TestMime(t *testing.T) {
 //	doTest("mimetest.lua", t)
 //}
 
-func TestMimeDot(t *testing.T) {
-	doTest("stufftest.lua", t)
-}
+//func TestMimeDot(t *testing.T) {
+//	doTest("stufftest.lua", t)
+//}
 
 //func TestSmtp(t *testing.T) {
 //	doTest("smtptest.lua", t)
@@ -50,9 +50,9 @@ func TestMimeDot(t *testing.T) {
 //	doTest("test_socket_error.lua", t)
 //}
 
-func TestUrl(t *testing.T) {
-	doTest("urltest.lua", t)
-}
+//func TestUrl(t *testing.T) {
+//	doTest("urltest.lua", t)
+//}
 
 // ----------------------------------------------------------------------------
 func doTest(testScript string, t *testing.T) {

@@ -15,26 +15,51 @@ import (
 L := lua.NewState()
 defer L.Close()
 
-// Preload modules
+// Preload LuaSocket modules
 gluasocket.Preload(L)
+```
+
+### Read lines from a socket
+
+```go
+script := `
+  local client = require 'socket.core'.connect('127.0.01', 8000)
+  local line1 = client:receive('*l')
+  local line2 = client:receive('*l')
+  client:close()
+  return line1, line2`
+L.DoString(script)
+line1 := L.ToString(-2)
+line2 := L.ToString(-1)
 ```
 
 ### Get system time
 
-Run some Lua that makes use of `socket.gettime()`:
-
 ```go
 L.DoString("return require 'socket'.gettime()")
-
-// Read the returned time
-lv := L.Get(-1)
-retval, ok := lv.(lua.LNumber)
-gettimeValue := float64(retval)
+gettimeValue := float64(L.ToNumber(-1))
 ```
 
 ## Testing
 
-The original LuaSocket Lua-based unit tests are used and wrapped in Go unit test functions. Tests that perform `os.exit()` are modified to perform `error()` instead so that errors are made detectable.
+```bash
+$ go test github.com/BixData/gluasocket...
+ok  	github.com/BixData/gluasocket	0.045s
+?   	github.com/BixData/gluasocket/ltn12	[no test files]
+?   	github.com/BixData/gluasocket/mime	[no test files]
+ok  	github.com/BixData/gluasocket/mimecore	0.040s
+?   	github.com/BixData/gluasocket/socket	[no test files]
+ok  	github.com/BixData/gluasocket/socketcore	0.269s
+?   	github.com/BixData/gluasocket/socketexcept	[no test files]
+?   	github.com/BixData/gluasocket/socketftp	[no test files]
+?   	github.com/BixData/gluasocket/socketheaders	[no test files]
+?   	github.com/BixData/gluasocket/sockethttp	[no test files]
+?   	github.com/BixData/gluasocket/socketsmtp	[no test files]
+?   	github.com/BixData/gluasocket/sockettp	[no test files]
+?   	github.com/BixData/gluasocket/socketurl	[no test files]
+```
+
+Some original Lua-based LuaSocket unit tests are used and wrapped in Go unit test functions. Tests that perform `os.exit()` are modified to perform `error()` instead so that errors are made detectable.
 
 ## Design
 
