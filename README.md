@@ -23,7 +23,7 @@ gluasocket.Preload(L)
 
 ```go
 script := `
-  local client = require 'socket.core'.connect('127.0.01', 8000)
+  local client = require 'socket'.connect('127.0.01', 8000)
   local line1 = client:receive('*l')
   local line2 = client:receive('*l')
   client:close()
