@@ -1,18 +1,18 @@
 package gluasocket
 
 import (
-	"github.com/BixData/gluasocket/ltn12"
-	"github.com/BixData/gluasocket/mime"
-	"github.com/BixData/gluasocket/mimecore"
-	"github.com/BixData/gluasocket/socket"
-	"github.com/BixData/gluasocket/socketcore"
-	"github.com/BixData/gluasocket/socketexcept"
-	"github.com/BixData/gluasocket/socketftp"
-	"github.com/BixData/gluasocket/socketheaders"
-	"github.com/BixData/gluasocket/sockethttp"
-	"github.com/BixData/gluasocket/socketsmtp"
-	"github.com/BixData/gluasocket/sockettp"
-	"github.com/BixData/gluasocket/socketurl"
+	"github.com/teejaded/gluasocket/ltn12"
+	"github.com/teejaded/gluasocket/mime"
+	"github.com/teejaded/gluasocket/mimecore"
+	"github.com/teejaded/gluasocket/socket"
+	"github.com/teejaded/gluasocket/socketcore"
+	"github.com/teejaded/gluasocket/socketexcept"
+	"github.com/teejaded/gluasocket/socketftp"
+	"github.com/teejaded/gluasocket/socketheaders"
+	"github.com/teejaded/gluasocket/sockethttp"
+	"github.com/teejaded/gluasocket/socketsmtp"
+	"github.com/teejaded/gluasocket/sockettp"
+	"github.com/teejaded/gluasocket/socketurl"
 	"github.com/yuin/gopher-lua"
 )
 

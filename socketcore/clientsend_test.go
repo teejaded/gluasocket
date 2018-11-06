@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/BixData/gluasocket"
+	"github.com/teejaded/gluasocket"
 	"github.com/stretchr/testify/assert"
 	"github.com/yuin/gopher-lua"
 )

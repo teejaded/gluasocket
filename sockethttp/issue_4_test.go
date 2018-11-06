@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/BixData/gluasocket/sockethttp"
+	"github.com/teejaded/gluasocket/sockethttp"
 	"github.com/stretchr/testify/assert"
 	"github.com/yuin/gopher-lua"
 )
