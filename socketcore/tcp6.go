@@ -4,8 +4,8 @@ import (
 	"github.com/yuin/gopher-lua"
 )
 
-func tcpFn(L *lua.LState) int {
-	master := &Master{Family: AF_UNSPEC}
+func tcp6Fn(L *lua.LState) int {
+	master := &Master{Family: AF_INET6}
 	ud := L.NewUserData()
 	ud.Value = master
 	L.SetMetatable(ud, L.GetTypeMetatable(MASTER_TYPENAME))

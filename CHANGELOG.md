@@ -1,6 +1,7 @@
 ## [Unreleased]
 ### Added
 - Implemented `socket.core.dns` module `getaddrinfo()`
+- Implemented `socket.core` module `tcp4()` and `tcp6()`
 
 ## [0.1.0] - 2017-10-14
 ### Added

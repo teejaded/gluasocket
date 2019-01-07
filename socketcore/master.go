@@ -12,6 +12,7 @@ const (
 
 type Master struct {
 	Timeout time.Duration
+	Family  int
 }
 
 var masterMethods = map[string]lua.LGFunction{
