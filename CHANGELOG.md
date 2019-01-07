@@ -1,4 +1,6 @@
 ## [Unreleased]
+### Added
+- Implemented `socket.core.dns` module `getaddrinfo()`
 
 ## [0.1.0] - 2017-10-14
 ### Added
