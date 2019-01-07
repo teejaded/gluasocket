@@ -42,9 +42,9 @@ func TestExcept(t *testing.T) {
 //	doTest("testmesg.lua", t)
 //}
 
-//func TestSocketGetAddrInfo(t *testing.T) {
-//	doTest("test_getaddrinfo.lua", t)
-//}
+func TestSocketGetAddrInfo(t *testing.T) {
+	doTest("test_getaddrinfo.lua", t)
+}
 
 //func TestSocketError(t *testing.T) {
 //	doTest("test_socket_error.lua", t)
