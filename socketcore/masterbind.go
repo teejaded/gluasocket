@@ -5,6 +5,9 @@ import (
 )
 
 func masterBindMethod(L *lua.LState) int {
-	L.RaiseError("master:bind() not implemented yet")
-	return 0
+	master := checkMaster(L)
+	master.BindAddr = L.CheckString(2)
+	master.BindPort = L.Get(3)
+	L.Push(lua.LNumber(1))
+	return 1
 }

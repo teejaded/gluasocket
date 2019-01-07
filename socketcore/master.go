@@ -1,6 +1,7 @@
 package gluasocket_socketcore
 
 import (
+	"net"
 	"time"
 
 	"github.com/yuin/gopher-lua"
@@ -11,7 +12,12 @@ const (
 )
 
 type Master struct {
-	Timeout time.Duration
+	Listener net.Listener
+	BindAddr string
+	BindPort lua.LValue
+	Timeout  time.Duration
+	Family   int
+	Options  map[string]lua.LValue
 }
 
 var masterMethods = map[string]lua.LGFunction{
@@ -19,6 +25,7 @@ var masterMethods = map[string]lua.LGFunction{
 	"close":      masterCloseMethod,
 	"connect":    masterConnectMethod,
 	"listen":     masterListenMethod,
+	"setoption":  masterSetOptionMethod,
 	"settimeout": masterSetTimeoutMethod,
 }
 

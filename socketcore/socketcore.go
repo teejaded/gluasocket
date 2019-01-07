@@ -4,6 +4,12 @@ import (
 	"github.com/yuin/gopher-lua"
 )
 
+const (
+	AF_UNSPEC = 0
+	AF_INET   = 2
+	AF_INET6  = 23
+)
+
 // ----------------------------------------------------------------------------
 
 var exports = map[string]lua.LGFunction{
@@ -13,6 +19,8 @@ var exports = map[string]lua.LGFunction{
 	"skip":    skipFn,
 	"sleep":   sleepFn,
 	"tcp":     tcpFn,
+	"tcp4":    tcp4Fn,
+	"tcp6":    tcp6Fn,
 	"udp":     udpFn,
 }
 
