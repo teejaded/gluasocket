@@ -5,7 +5,7 @@ import (
 )
 
 func masterBindMethod(L *lua.LState) int {
-	master := checkMaster(L)
+	master, _ := checkMaster(L)
 	master.BindAddr = L.CheckString(2)
 	master.BindPort = L.Get(3)
 	L.Push(lua.LNumber(1))
