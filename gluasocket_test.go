@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/BixData/gluasocket"
+	"github.com/nubix-io/gluasocket"
 	"github.com/stretchr/testify/assert"
 	"github.com/yuin/gopher-lua"
 )

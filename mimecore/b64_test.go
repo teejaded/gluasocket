@@ -3,7 +3,7 @@ package gluasocket_mimecore_test
 import (
 	"testing"
 
-	"github.com/BixData/gluasocket/mimecore"
+	"github.com/nubix-io/gluasocket/mimecore"
 	"github.com/stretchr/testify/assert"
 	"github.com/yuin/gopher-lua"
 )
