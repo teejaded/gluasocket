@@ -10,5 +10,6 @@ func masterSetTimeoutMethod(L *lua.LState) int {
 	master := checkMaster(L)
 	timeout := L.CheckNumber(2)
 	master.Timeout = time.Duration(timeout * 1.0e9)
-	return 0
+	L.Push(lua.LNumber(1))
+	return 1
 }

@@ -16,5 +16,5 @@ func TestMasterSetTimeout(t *testing.T) {
 
 	assert.NoError(L.DoString(`return require 'socket.core'.tcp():settimeout(.25)`))
 	retval := L.Get(-1)
-	assert.Equal(lua.LTNil, retval.Type())
+	assert.Equal(lua.LTNumber, retval.Type())
 }
