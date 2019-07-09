@@ -37,8 +37,8 @@ var clientMethods = map[string]lua.LGFunction{
 
 func checkClient(L *lua.LState) *Client {
 	ud := L.CheckUserData(1)
-	if v, ok := ud.Value.(*Client); ok {
-		return v
+	if v, ok := ud.Value.(*Master); ok {
+		return v.Client
 	}
 	L.ArgError(1, "client expected")
 	return nil

@@ -5,7 +5,7 @@ import (
 )
 
 func masterSetOptionMethod(L *lua.LState) int {
-	master := checkMaster(L)
+	master, _ := checkMaster(L)
 	optionName := L.CheckString(2) /* obj, name, ... */
 	if master.Options == nil {
 		master.Options = map[string]lua.LValue{}
