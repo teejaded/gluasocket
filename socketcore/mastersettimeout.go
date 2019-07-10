@@ -7,7 +7,7 @@ import (
 )
 
 func masterSetTimeoutMethod(L *lua.LState) int {
-	master := checkMaster(L)
+	master, _ := checkMaster(L)
 	timeout := L.CheckNumber(2)
 	master.Timeout = time.Duration(timeout * 1.0e9)
 	L.Push(lua.LNumber(1))

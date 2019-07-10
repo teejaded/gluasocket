@@ -8,7 +8,7 @@ import (
 )
 
 func masterListenMethod(L *lua.LState) int {
-	master := checkMaster(L)
+	master, _ := checkMaster(L)
 	//backlog := L.CheckNumber(1)
 
 	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%s", master.BindAddr, master.BindPort))
