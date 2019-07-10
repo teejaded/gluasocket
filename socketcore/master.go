@@ -18,7 +18,6 @@ type Master struct {
 	Timeout  time.Duration
 	Family   int
 	Options  map[string]lua.LValue
-	Client   *Client
 }
 
 var masterMethods = map[string]lua.LGFunction{

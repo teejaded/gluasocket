@@ -20,9 +20,9 @@ func connectFn(L *lua.LState) int {
 	}
 
 	reader := bufio.NewReader(conn)
-	master := &Master{Client: &Client{Conn: conn, Reader: reader}}
+	client := &Client{Conn: conn, Reader: reader}
 	ud := L.NewUserData()
-	ud.Value = master
+	ud.Value = client
 	L.SetMetatable(ud, L.GetTypeMetatable(CLIENT_TYPENAME))
 	L.Push(ud)
 	return 1

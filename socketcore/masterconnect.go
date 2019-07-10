@@ -21,7 +21,8 @@ func masterConnectMethod(L *lua.LState) int {
 	}
 
 	reader := bufio.NewReader(conn)
-	master.Client = &Client{Conn: conn, Reader: reader, Timeout: master.Timeout}
+	client := &Client{Conn: conn, Reader: reader, Timeout: master.Timeout}
+	ud.Value = client
 	L.SetMetatable(ud, L.GetTypeMetatable(CLIENT_TYPENAME))
 	L.Push(ud)
 	return 1
