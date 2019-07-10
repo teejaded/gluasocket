@@ -1,6 +1,7 @@
 ## [Unrelelased]
 ### Fixed
 - [PR-14](https://github.com/nubix-io/gluasocket/pull/14): `socket.core` `skip()` results were off by one; provide `settimeout()` missing return value for compatiblility with `try()`
+- [PR-15](https://github.com/nubix-io/gluasocket/pull/15): smtp sending is fixed through proper swapping of metatables on connect
 
 ## [0.1.1] - 2018-01-12
 ### Added
