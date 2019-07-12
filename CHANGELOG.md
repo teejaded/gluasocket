@@ -3,6 +3,7 @@
 - [PR-14](https://github.com/nubix-io/gluasocket/pull/14): `socket.core` `skip()` results were off by one; provide `settimeout()` missing return value for compatiblility with `try()`
 - [PR-15](https://github.com/nubix-io/gluasocket/pull/15): smtp sending is fixed through proper swapping of metatables on connect
 - Integrate [luasocket#3ee8951](https://github.com/diegonehab/luasocket/commit/3ee89515a0ef4852f64b13133c22aa7d3a322cfd#diff-4d7e24364dca5902525b2638230cb132) (19 Nov 2017): fixed URL parsing in url.lua: parse fragment after parsing username and password
+- Integrate [luasocket#2d6a0f7](https://github.com/diegonehab/luasocket/commit/2d6a0f7bda9241f827a3edbfa738603c024a423b#diff-4d7e24364dca5902525b2638230cb132) (22 Nov 2017): fixed url parsing; postpone fragment parsing after authority parsing; added test cases to test/urltest.lua; fixed reference patterns in check_protect() to upper case hex letters
 
 ## [0.1.1] - 2018-01-12
 ### Added
