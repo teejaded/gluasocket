@@ -13,7 +13,7 @@ func masterConnectMethod(L *lua.LState) int {
 	hostname := L.ToString(2)
 	port := L.ToInt(3)
 
-	conn, err := net.Dial("tcp", fmt.Sprintf("%s:%d", hostname, port))
+	conn, err := net.DialTimeout("tcp", fmt.Sprintf("%s:%d", hostname, port), master.Timeout)
 	if err != nil {
 		L.Push(lua.LNil)
 		L.Push(lua.LString(err.Error()))
