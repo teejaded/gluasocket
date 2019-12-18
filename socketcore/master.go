@@ -12,15 +12,17 @@ const (
 )
 
 type Master struct {
-	Listener net.Listener
-	BindAddr string
-	BindPort lua.LValue
-	Timeout  time.Duration
-	Family   int
-	Options  map[string]lua.LValue
+	Listener   net.Listener
+	Connection *net.Conn
+	BindAddr   string
+	BindPort   lua.LValue
+	Timeout    time.Duration
+	Family     int
+	Options    map[string]lua.LValue
 }
 
 var masterMethods = map[string]lua.LGFunction{
+	"accept":     masterAcceptMethod,
 	"bind":       masterBindMethod,
 	"close":      masterCloseMethod,
 	"connect":    masterConnectMethod,

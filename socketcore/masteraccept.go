@@ -1,0 +1,24 @@
+package gluasocket_socketcore
+
+import (
+	"bufio"
+	"fmt"
+
+	"github.com/yuin/gopher-lua"
+)
+
+func masterAcceptMethod(L *lua.LState) int {
+	master, ud := checkMaster(L)
+	fmt.Println(master)
+	conn, err := master.Listener.Accept()
+	if err != nil {
+		panic(err)
+	}
+	master.Connection = &conn
+	reader := bufio.NewReader(conn)
+	client := &Client{Conn: conn, Reader: reader, Timeout: master.Timeout}
+	ud.Value = client
+	L.SetMetatable(ud, L.GetTypeMetatable(CLIENT_TYPENAME))
+	L.Push(ud)
+	return 1
+}

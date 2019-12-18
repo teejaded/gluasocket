@@ -5,5 +5,7 @@ import (
 )
 
 func masterCloseMethod(L *lua.LState) int {
+	master, _ := checkMaster(L)
+	master.Listener.Close()
 	return 0
 }
