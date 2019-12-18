@@ -2,14 +2,12 @@ package gluasocket_socketcore
 
 import (
 	"bufio"
-	"fmt"
 
 	"github.com/yuin/gopher-lua"
 )
 
 func masterAcceptMethod(L *lua.LState) int {
 	master, ud := checkMaster(L)
-	fmt.Println(master)
 	conn, err := master.Listener.Accept()
 	if err != nil {
 		panic(err)
