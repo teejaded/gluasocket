@@ -10,7 +10,9 @@ func masterAcceptMethod(L *lua.LState) int {
 	master, ud := checkMaster(L)
 	conn, err := master.Listener.Accept()
 	if err != nil {
-		panic(err)
+		L.Push(lua.LNil)
+		L.Push(lua.LString(err.Error()))
+		return 2
 	}
 	reader := bufio.NewReader(conn)
 	client := &Client{Conn: conn, Reader: reader, Timeout: master.Timeout}
