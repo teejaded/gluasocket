@@ -14,7 +14,6 @@ func masterAcceptMethod(L *lua.LState) int {
 	if err != nil {
 		panic(err)
 	}
-	master.Connection = &conn
 	reader := bufio.NewReader(conn)
 	client := &Client{Conn: conn, Reader: reader, Timeout: master.Timeout}
 	ud.Value = client
