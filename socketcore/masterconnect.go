@@ -9,7 +9,7 @@ import (
 )
 
 func masterConnectMethod(L *lua.LState) int {
-	master := checkMaster(L)
+	master, ud := checkMaster(L)
 	hostname := L.ToString(2)
 	port := L.ToInt(3)
 
@@ -22,7 +22,6 @@ func masterConnectMethod(L *lua.LState) int {
 
 	reader := bufio.NewReader(conn)
 	client := &Client{Conn: conn, Reader: reader, Timeout: master.Timeout}
-	ud := L.NewUserData()
 	ud.Value = client
 	L.SetMetatable(ud, L.GetTypeMetatable(CLIENT_TYPENAME))
 	L.Push(ud)

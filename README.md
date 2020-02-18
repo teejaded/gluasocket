@@ -8,7 +8,7 @@ A native Go implementation of [LuaSocket](https://github.com/diegonehab/luasocke
 
 ```go
 import (
-	"github.com/BixData/gluasocket"
+	"github.com/nubix-io/gluasocket"
 )
 
 // Bring up a GopherLua VM
@@ -23,7 +23,7 @@ gluasocket.Preload(L)
 
 ```go
 script := `
-  local client = require 'socket'.connect('127.0.01', 8000)
+  local client = require 'socket'.connect('127.0.0.1', 8000)
   local line1 = client:receive('*l')
   local line2 = client:receive('*l')
   client:close()
@@ -43,20 +43,20 @@ gettimeValue := float64(L.ToNumber(-1))
 ## Testing
 
 ```bash
-$ go test github.com/BixData/gluasocket...
-ok  	github.com/BixData/gluasocket	0.045s
-?   	github.com/BixData/gluasocket/ltn12	[no test files]
-?   	github.com/BixData/gluasocket/mime	[no test files]
-ok  	github.com/BixData/gluasocket/mimecore	0.040s
-?   	github.com/BixData/gluasocket/socket	[no test files]
-ok  	github.com/BixData/gluasocket/socketcore	0.269s
-?   	github.com/BixData/gluasocket/socketexcept	[no test files]
-?   	github.com/BixData/gluasocket/socketftp	[no test files]
-?   	github.com/BixData/gluasocket/socketheaders	[no test files]
-?   	github.com/BixData/gluasocket/sockethttp	[no test files]
-?   	github.com/BixData/gluasocket/socketsmtp	[no test files]
-?   	github.com/BixData/gluasocket/sockettp	[no test files]
-?   	github.com/BixData/gluasocket/socketurl	[no test files]
+$ go test github.com/nubix-io/gluasocket...
+ok  	github.com/nubix-io/gluasocket	0.045s
+?   	github.com/nubix-io/gluasocket/ltn12	[no test files]
+?   	github.com/nubix-io/gluasocket/mime	[no test files]
+ok  	github.com/nubix-io/gluasocket/mimecore	0.040s
+?   	github.com/nubix-io/gluasocket/socket	[no test files]
+ok  	github.com/nubix-io/gluasocket/socketcore	0.269s
+?   	github.com/nubix-io/gluasocket/socketexcept	[no test files]
+?   	github.com/nubix-io/gluasocket/socketftp	[no test files]
+?   	github.com/nubix-io/gluasocket/socketheaders	[no test files]
+?   	github.com/nubix-io/gluasocket/sockethttp	[no test files]
+?   	github.com/nubix-io/gluasocket/socketsmtp	[no test files]
+?   	github.com/nubix-io/gluasocket/sockettp	[no test files]
+?   	github.com/nubix-io/gluasocket/socketurl	[no test files]
 ```
 
 Some original Lua-based LuaSocket unit tests are used and wrapped in Go unit test functions. Tests that perform `os.exit()` are modified to perform `error()` instead so that errors are made detectable.

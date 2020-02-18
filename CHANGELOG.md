@@ -1,4 +1,12 @@
-## [Unreleased]
+## [Unrelelased]
+### Fixed
+- [PR-14](https://github.com/nubix-io/gluasocket/pull/14): `socket.core` `skip()` results were off by one; provide `settimeout()` missing return value for compatiblility with `try()`
+
+## [0.1.1] - 2018-01-12
+### Added
+- Implemented `socket.core.dns` module `getaddrinfo()`
+- Implemented `socket.core` module `tcp4()` and `tcp6()`
+- Implemented `socket{master}` userData object `bind()` and `listen()`
 
 ## [0.1.0] - 2017-10-14
 ### Added
