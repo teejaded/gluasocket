@@ -21,6 +21,7 @@ type Master struct {
 }
 
 var masterMethods = map[string]lua.LGFunction{
+	"accept":     masterAcceptMethod,
 	"bind":       masterBindMethod,
 	"close":      masterCloseMethod,
 	"connect":    masterConnectMethod,

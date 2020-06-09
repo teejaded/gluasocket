@@ -50,9 +50,9 @@ func TestSocketGetAddrInfo(t *testing.T) {
 //	doTest("test_socket_error.lua", t)
 //}
 
-//func TestUrl(t *testing.T) {
-//	doTest("urltest.lua", t)
-//}
+func TestUrl(t *testing.T) {
+	doTest("urltest.lua", t)
+}
 
 // ----------------------------------------------------------------------------
 func doTest(testScript string, t *testing.T) {
