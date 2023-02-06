@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/nubix-io/gluasocket"
+	"github.com/teejaded/gluasocket"
 	"github.com/stretchr/testify/assert"
 	"github.com/yuin/gopher-lua"
 )

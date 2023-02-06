@@ -8,7 +8,7 @@ A native Go implementation of [LuaSocket](https://github.com/diegonehab/luasocke
 
 ```go
 import (
-	"github.com/nubix-io/gluasocket"
+	"github.com/teejaded/gluasocket"
 )
 
 // Bring up a GopherLua VM
@@ -43,20 +43,20 @@ gettimeValue := float64(L.ToNumber(-1))
 ## Testing
 
 ```bash
-$ go test github.com/nubix-io/gluasocket...
-ok  	github.com/nubix-io/gluasocket	0.045s
-?   	github.com/nubix-io/gluasocket/ltn12	[no test files]
-?   	github.com/nubix-io/gluasocket/mime	[no test files]
-ok  	github.com/nubix-io/gluasocket/mimecore	0.040s
-?   	github.com/nubix-io/gluasocket/socket	[no test files]
-ok  	github.com/nubix-io/gluasocket/socketcore	0.269s
-?   	github.com/nubix-io/gluasocket/socketexcept	[no test files]
-?   	github.com/nubix-io/gluasocket/socketftp	[no test files]
-?   	github.com/nubix-io/gluasocket/socketheaders	[no test files]
-?   	github.com/nubix-io/gluasocket/sockethttp	[no test files]
-?   	github.com/nubix-io/gluasocket/socketsmtp	[no test files]
-?   	github.com/nubix-io/gluasocket/sockettp	[no test files]
-?   	github.com/nubix-io/gluasocket/socketurl	[no test files]
+$ go test github.com/teejaded/gluasocket...
+ok  	github.com/teejaded/gluasocket	0.045s
+?   	github.com/teejaded/gluasocket/ltn12	[no test files]
+?   	github.com/teejaded/gluasocket/mime	[no test files]
+ok  	github.com/teejaded/gluasocket/mimecore	0.040s
+?   	github.com/teejaded/gluasocket/socket	[no test files]
+ok  	github.com/teejaded/gluasocket/socketcore	0.269s
+?   	github.com/teejaded/gluasocket/socketexcept	[no test files]
+?   	github.com/teejaded/gluasocket/socketftp	[no test files]
+?   	github.com/teejaded/gluasocket/socketheaders	[no test files]
+?   	github.com/teejaded/gluasocket/sockethttp	[no test files]
+?   	github.com/teejaded/gluasocket/socketsmtp	[no test files]
+?   	github.com/teejaded/gluasocket/sockettp	[no test files]
+?   	github.com/teejaded/gluasocket/socketurl	[no test files]
 ```
 
 Some original Lua-based LuaSocket unit tests are used and wrapped in Go unit test functions. Tests that perform `os.exit()` are modified to perform `error()` instead so that errors are made detectable.
