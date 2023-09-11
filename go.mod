@@ -1,6 +1,6 @@
 module github.com/teejaded/gluasocket
 
-go 1.18
+go 1.20
 
 require (
 	github.com/mhale/smtpd v0.8.0
